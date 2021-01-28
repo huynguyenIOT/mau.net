@@ -1,0 +1,125 @@
+﻿
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="page-breadcrumb breadcrumb">
+            
+            <li>
+                <a href="#">Quản trị hệ thống</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="/#/organizations">Quản lý đơnvị/phòng ban</a>
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-8">
+        <button type="button" class="btn btn-sm btn-primary" id="submitrefesh" ng-click="refeshgrid()">
+            <i class="fa fa-refresh"></i>
+            <span>Tải lại</span>
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" id="submitcong" ng-click="OpenAddForm()">
+            <i class="fa fa-plus"></i>
+            <span>Thêm mới</span>
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" ng-if="visibleBtnedit" id="submitsua" ng-click="OpenEditForm()">
+            <i class="fa fa-edit"></i>
+            <span>Cập nhật</span>
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" ng-if="visibleBtndel" id="submitxoa" ng-click="OpenDeleteForm()">
+            <i class="fa fa-times"></i>
+            <span>Xóa</span>
+        </button>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group">
+           
+            <input type="text" ng-model="filterText" ng-keyup="$event.keyCode == 13 && Search()" class="col-md-12 input-sm form-control" placeholder="Tìm kiếm" ng-pattern="word" required ng-trim="true">
+            <span class="input-group-addon" ng-click="Search()"><i class="fa fa-search"></i></span>
+            <span class="error" ng-show="myForm.input.$error.required">
+                Required!
+            </span>
+            <span class="error" ng-show="myForm.input.$error.pattern">
+                Single word only!
+            </span>
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="portlet light">
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover dataTable">
+                    <thead>
+                        <tr style="background-color: #EEEEEE;">
+                            <th class="table-checkbox sorting_disabled" style="width: 20px;">
+                                <input type="checkbox" ng-click="CheckAllItem()" ng-model="check" />
+                            </th>
+                            <th ng-repeat="item in dataHeader" ng-class="GetItemHeaderClass(item)"
+                                ng-click="ClickToHeader(item)">
+                                <a href="">{{item.Value}}</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ListDataDefault" ng-class="GetItemClass(item)">
+                            <td>
+                                <input type="checkbox" ng-model="item.selected" ng-click="CheckItem(item)" ng-class='{selected: $index==selectedRow}' />
+                            </td>
+                            <td>
+                                {{item.STT}}
+                            </td>
+                            <td style="cursor: pointer;" ng-click="OpenViewForm(item)" class="col-lg-4">
+                                {{item.OrganizationName}}
+                            </td>
+                            <!--<td>
+                                {{item.Type}}
+                            </td>-->
+                            <td>
+                                {{item.ParentName}}
+                            </td>
+                            <td>
+                                {{item.Loai==1?"Đơn vị":"Phòng ban"}}
+                            </td>
+                            <td>
+                                {{item.SoDienThoai}}
+                            </td>
+                            <td>
+                                {{item.DiaChi}}
+                            </td>
+                            <td>
+                                {{item.Description}}
+                            </td>
+
+                            <td>
+                                {{item.CreatedOnDate | date:'dd/MM/yyyy HH:mm a'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row" ng-hide="recordCount==0" style="margin-right : 15px;">
+
+                <button type="button" value="Next" class="btn btn-sm btn-primary pull-right" ng-disabled="IsDisableNext" ng-click="GoNext()">
+                    &nbsp;<i class="fa fa-chevron-right"></i>
+                </button>
+                <button type="button" value="Previous" class="btn btn-sm btn-primary pull-right " ng-disabled="IsDisablePrevious" ng-click="GoPrev()">
+                    &nbsp;<i class="fa fa-chevron-left"></i>
+                </button>
+
+                <span data-bind="text:PageDisplay" class="pull-right" style="line-height: 28px;padding: 0px 4px 0px 0px;">{{ pagging }}</span>
+            </div>
+        </div>
+    </div>
+</div>
